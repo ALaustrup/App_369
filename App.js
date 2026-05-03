@@ -34,6 +34,10 @@ export default function App() {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
+        <View style={styles.badgeContainer}>
+          <Text style={styles.badgeText}>{scene.badge}</Text>
+        </View>
+
         <View style={styles.header}>
           <Text style={styles.questionText}>{scene.text}</Text>
         </View>
@@ -77,6 +81,18 @@ const styles = StyleSheet.create({
     padding: 20,
     justifyContent: 'center',
     minHeight: '100%',
+  },
+  badgeContainer: {
+    backgroundColor: '#fff',
+    padding: 5,
+    alignSelf: 'center',
+    marginBottom: 20,
+  },
+  badgeText: {
+    color: '#000',
+    fontWeight: 'bold',
+    fontSize: 12,
+    fontFamily: 'monospace',
   },
   header: {
     marginBottom: 40,

@@ -29,10 +29,12 @@
     "ethers": "^6.16.0",
     "expo": "^55.0.19",
     "expo-av": "^16.0.8",
+    "octokit": "^5.0.5",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "react-native": "^0.85.2",
     "react-native-web": "^0.21.2",
-    "readline-sync": "^1.4.10"
+    "readline-sync": "^1.4.10",
+    "simple-git": "^3.36.0"
   }
 }

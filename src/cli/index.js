@@ -2,11 +2,18 @@ const chalk = require('chalk');
 const clear = require('clear');
 const readline = require('readline-sync');
 const engine = require('../core/SceneEngine');
+const state = require('../core/State');
 
 async function run() {
   while (true) {
     clear();
     const scene = await engine.getCurrentScene();
+    
+    // Display Verification Badge
+    console.log(chalk.black.bgWhite.bold(` ${scene.badge} `));
+    if (state.player.githubUsername) {
+      console.log(chalk.green(`SYNCED: @${state.player.githubUsername}`));
+    }
     
     // Display Question
     console.log('\n' + chalk.cyan.bold(scene.text) + '\n');

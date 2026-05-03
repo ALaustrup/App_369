@@ -1,26 +1,27 @@
 const scenes = {
   start: {
-    text: "?",
-    achievement: "WELCOME_TO_THE_VOID",
-    getChoices: () => {
-      const directions = [
-        { label: "Initialize the Source", nft: "SOURCE_FRAG" },
-        { label: "Navigate to the Void", nft: "VOID_PASS" },
-        { label: "Decrypt the Echo", nft: "ECHO_KEY" },
-        { label: "Execute the Protocol", nft: "PROTOCOL_X" }
-      ];
-      
-      const count = Math.floor(Math.random() * 2) + 3; // 3 to 4
-      const shuffled = directions.sort(() => 0.5 - Math.random());
-      const selected = shuffled.slice(0, count);
-      
-      return selected.map((item, index) => ({
-        id: `start_${index}`,
-        label: item.label,
-        nextScene: item.label.includes("Void") ? "the_void" : "the_kernel",
-        nftReward: { name: item.nft, type: 'Core Fragment' }
-      }));
-    }
+    text: "--- ASTRA MATRIX BOOT SEQUENCE ---\nSTATUS: INITIALIZING\n\nWelcome, Developer. Your project environment is ready. Would you like to sync with the Source?",
+    achievement: "SYSTEM_ONLINE",
+    getChoices: () => [
+      { id: 'sync_github', label: "Sync GitHub Account", nextScene: "github_init" },
+      { id: 'check_expansion', label: "Check for Astra Matrix Expansions", nextScene: "expansion_check" },
+      { id: 'offline_start', label: "Initialize Local Source", nextScene: "the_kernel" },
+      { id: 'status', label: "Query Current Identity", nextScene: "system_status" }
+    ]
+  },
+  github_init: {
+    text: "Awaiting authentication token... Once synced, your journey will be mirrored in the Repository.",
+    getChoices: () => [
+      { id: 'connect', label: "Confirm Connection", nextScene: "the_kernel", action: "sync_github" },
+      { id: 'back', label: "Return to Gateway", nextScene: "start" }
+    ]
+  },
+  expansion_check: {
+    text: "Pinging Astra Matrix Headquarters... A new Sector (Expansion Pack) has been detected in the Source!",
+    getChoices: () => [
+      { id: 'apply', label: "Synchronize New Reality Data", nextScene: "the_kernel", action: "apply_expansion" },
+      { id: 'back', label: "Not Now", nextScene: "start" }
+    ]
   },
   the_kernel: {
     text: "You stand before the Kernel. It pulses with a raw, binary light—the heartbeat of all logic in this realm. Commands hum in the air around you.",
