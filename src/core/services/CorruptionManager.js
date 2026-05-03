@@ -1,5 +1,5 @@
 const state = require('../State');
-const github = require('./services/GitHubService');
+const github = require('./GitHubService');
 
 class CorruptionManager {
   constructor() {
