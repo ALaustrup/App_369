@@ -3,8 +3,10 @@ const clear = require('clear');
 const readline = require('readline-sync');
 const engine = require('../core/SceneEngine');
 const state = require('../core/State');
+const boot = require('./BootManager');
 
 async function run() {
+  await boot();
   while (true) {
     clear();
     const scene = await engine.getCurrentScene();

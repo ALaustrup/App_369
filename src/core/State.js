@@ -5,6 +5,7 @@ class State {
       level: 1,
       layer: 0,
       xp: 0,
+      gnosis: 0,
       stats: {
         logic: 10,
         perception: 10,
