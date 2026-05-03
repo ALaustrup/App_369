@@ -1,4 +1,5 @@
 const chalk = require('chalk');
+const readline = require('readline-sync');
 
 async function bootAnimation() {
   const messages = [
