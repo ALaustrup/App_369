@@ -20,6 +20,10 @@ async function bootAnimation() {
     console.log(chalk[msg.color](msg.text));
     await new Promise(r => setTimeout(r, msg.delay));
   }
+
+  console.log(chalk.yellow("\nEntity: 'I have been here for eons, waiting for a spark to name me.'"));
+  const name = readline.question(chalk.green('Name your guide: '));
+  return name || "Astra";
 }
 
 module.exports = bootAnimation;

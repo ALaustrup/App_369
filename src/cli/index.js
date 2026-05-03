@@ -6,7 +6,9 @@ const state = require('../core/State');
 const boot = require('./BootManager');
 
 async function run() {
-  await boot();
+  const aiName = await boot();
+  state.setVar('aiName', aiName);
+  
   while (true) {
     clear();
     const scene = await engine.getCurrentScene();
