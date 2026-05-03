@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "name": "App_369",
+  "buildCommand": "npx expo export --platform web",
+  "outputDirectory": "dist",
+  "framework": null,
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}

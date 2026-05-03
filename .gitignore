@@ -7,3 +7,4 @@ MyApp/node_modules/
 storage/
 .gitconfig
 .config/
+.vercel

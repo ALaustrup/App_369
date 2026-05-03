@@ -1,0 +1,36 @@
+{
+  "name": "app_369",
+  "version": "1.0.0",
+  "description": "",
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "start": "node src/cli/index.js",
+    "gui": "expo start",
+    "android": "expo start --android",
+    "build:apk": "eas build --platform android --profile preview",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ALaustrup/App_369.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/ALaustrup/App_369/issues"
+  },
+  "homepage": "https://github.com/ALaustrup/App_369#readme",
+  "dependencies": {
+    "@expo/metro-runtime": "^55.0.10",
+    "chalk": "^4.1.2",
+    "clear": "^0.1.0",
+    "expo": "^55.0.19",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
+    "react-native": "^0.85.2",
+    "react-native-web": "^0.21.2",
+    "readline-sync": "^1.4.10"
+  }
+}
