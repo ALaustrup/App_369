@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "name": "app-369",
-  "buildCommand": "npx expo export --platform web",
+  "public": true,
+  "buildCommand": "npx expo export --platform web --output-dir dist",
   "outputDirectory": "dist",
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
