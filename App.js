@@ -33,6 +33,9 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.container}>
+      <View style={styles.hud}>
+        <Text style={styles.hudText}>{`[LVL: ${scene.stats.level} | LYR: ${scene.stats.layer} | ALIAS: ${scene.stats.alias}]`}</Text>
+      </View>
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={styles.badgeContainer}>
           <Text style={styles.badgeText}>{scene.badge}</Text>
@@ -76,6 +79,18 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#000',
+  },
+  hud: {
+    padding: 10,
+    backgroundColor: '#111',
+    borderBottomWidth: 1,
+    borderColor: '#333',
+  },
+  hudText: {
+    color: '#0f0',
+    fontFamily: 'monospace',
+    fontSize: 14,
+    textAlign: 'center',
   },
   scrollContent: {
     padding: 20,
