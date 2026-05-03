@@ -48,6 +48,7 @@ class State {
   updateScene(sceneId) {
     this.player.history.push(this.player.currentScene);
     this.player.currentScene = sceneId;
+    this.player.layer += 1; // Increment layer on transition
   }
 
   setVar(key, value) {

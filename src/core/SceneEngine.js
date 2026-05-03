@@ -6,6 +6,7 @@ const achievements = require('./services/AchievementService');
 const github = require('./services/GitHubService');
 const verification = require('./services/VerificationService');
 const ai = require('../ai/NarrativeService');
+const corruption = require('./services/CorruptionManager');
 
 class SceneEngine {
   constructor() {
@@ -14,6 +15,10 @@ class SceneEngine {
 
   async getCurrentScene() {
     if (this.dynamicScene) return this.dynamicScene;
+
+    if (corruption.isTriggered()) {
+      return corruption.getCorruptionScene();
+    }
 
     const sceneId = state.player.currentScene;
     const scene = scenes[sceneId];
@@ -37,8 +42,8 @@ class SceneEngine {
   }
 
   async handleChoice(choice) {
-    this.dynamicScene = null; // Reset dynamic scene on standard choice
-    // ... (rest of standard handleChoice logic)
+    this.dynamicScene = null; 
+    if (choice.action === 'perform_restore') await corruption.performRestore();
     if (choice.action === 'sync_github') await github.authenticate('dummy-token');
     if (choice.action === 'apply_expansion') await github.applyExpansion();
 
