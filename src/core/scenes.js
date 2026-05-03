@@ -1,15 +1,16 @@
 const scenes = {
   start: {
     text: "?",
+    achievement: "WELCOME_TO_THE_VOID",
     getChoices: () => {
       // Possible directions to blend game mechanics with coding
       const directions = [
-        "Initialize the Source",
-        "Navigate to the Void",
-        "Decrypt the Echo",
-        "Execute the Protocol",
-        "Patch the Reality",
-        "Audit the Silence"
+        { label: "Initialize the Source", nft: "SOURCE_FRAG" },
+        { label: "Navigate to the Void", nft: "VOID_PASS" },
+        { label: "Decrypt the Echo", nft: "ECHO_KEY" },
+        { label: "Execute the Protocol", nft: "PROTOCOL_X" },
+        { label: "Patch the Reality", nft: "REALITY_PATCH" },
+        { label: "Audit the Silence", nft: "SILENCE_LOG" }
       ];
       
       // Randomly pick 3 to 6 directions
@@ -17,10 +18,11 @@ const scenes = {
       const shuffled = directions.sort(() => 0.5 - Math.random());
       const selected = shuffled.slice(0, count);
       
-      return selected.map((label, index) => ({
+      return selected.map((item, index) => ({
         id: `choice_${index}`,
-        label: label,
-        nextScene: 'placeholder'
+        label: item.label,
+        nextScene: 'placeholder',
+        nftReward: { name: item.nft, type: 'Collectible' }
       }));
     }
   },

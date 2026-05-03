@@ -2,10 +2,27 @@ class State {
   constructor() {
     this.player = {
       inventory: [],
+      nfts: [], // For Web3 assets
+      walletAddress: null,
+      achievements: [],
       currentScene: 'start',
       history: []
     };
-    this.gameVars = {};
+    this.gameVars = {
+      progressionLevel: 0 // Used for evolving music
+    };
+  }
+
+  addAchievement(id) {
+    if (!this.player.achievements.includes(id)) {
+      this.player.achievements.push(id);
+      return true;
+    }
+    return false;
+  }
+
+  addNFT(nft) {
+    this.player.nfts.push(nft);
   }
 
   updateScene(sceneId) {

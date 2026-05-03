@@ -3,10 +3,10 @@ const clear = require('clear');
 const readline = require('readline-sync');
 const engine = require('../core/SceneEngine');
 
-function run() {
+async function run() {
   while (true) {
     clear();
-    const scene = engine.getCurrentScene();
+    const scene = await engine.getCurrentScene();
     
     // Display Question
     console.log('\n' + chalk.cyan.bold(scene.text) + '\n');
@@ -27,14 +27,14 @@ function run() {
     
     if (!isNaN(choiceIndex) && choiceIndex >= 0 && choiceIndex < scene.choices.length) {
       // Numerical selection
-      engine.handleChoice(scene.choices[choiceIndex]);
+      await engine.handleChoice(scene.choices[choiceIndex]);
     } else if (parseInt(input) === customIndex) {
       // Selected "Type your own"
       const customAction = readline.question(chalk.magenta('What do you imagine? '));
-      engine.handleCustomInput(customAction);
+      await engine.handleCustomInput(customAction);
     } else if (input.trim() !== '') {
       // Direct custom input (typing instead of selecting a number)
-      engine.handleCustomInput(input);
+      await engine.handleCustomInput(input);
     } else {
       // Empty input - just re-render
       continue;

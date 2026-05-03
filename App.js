@@ -4,21 +4,32 @@ import { StyleSheet, Text, View, TouchableOpacity, TextInput, ScrollView, SafeAr
 const engine = require('./src/core/SceneEngine');
 
 export default function App() {
-  const [scene, setScene] = useState(engine.getCurrentScene());
+  const [scene, setScene] = useState(null);
   const [customInput, setCustomInput] = useState('');
 
-  const handleChoice = (choice) => {
-    engine.handleChoice(choice);
-    setScene(engine.getCurrentScene());
+  useEffect(() => {
+    loadScene();
+  }, []);
+
+  const loadScene = async () => {
+    const nextScene = await engine.getCurrentScene();
+    setScene(nextScene);
   };
 
-  const handleCustomSubmit = () => {
+  const handleChoice = async (choice) => {
+    await engine.handleChoice(choice);
+    await loadScene();
+  };
+
+  const handleCustomSubmit = async () => {
     if (customInput.trim() !== '') {
-      engine.handleCustomInput(customInput);
+      await engine.handleCustomInput(customInput);
       setCustomInput('');
-      setScene(engine.getCurrentScene());
+      await loadScene();
     }
   };
+
+  if (!scene) return null;
 
   return (
     <SafeAreaView style={styles.container}>
