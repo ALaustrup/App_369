@@ -24,8 +24,12 @@ class State {
   }
 
   addXP(amount) {
+    if (this.player.level >= 40) return false;
+    
     this.player.xp += amount;
-    if (this.player.xp >= this.player.level * 100) {
+    const xpNeeded = this.player.level * 150 + (Math.pow(this.player.level, 2) * 50);
+    
+    if (this.player.xp >= xpNeeded) {
       this.player.level += 1;
       this.player.xp = 0;
       return true; // Leveled up
