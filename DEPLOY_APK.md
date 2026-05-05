@@ -25,6 +25,21 @@ After `eas build` completes, download the generated APK and rename it:
 astra-matrix-latest.apk
 ```
 
+## 2.5) Publish artifact + metadata in one command
+
+Use the helper script to copy a real APK into the landing download path and generate checksum metadata:
+
+```bash
+scripts/publish-apk-release.sh /path/to/your-real.apk 1.0.0 2026-05-05T08:00:00Z "Initial public APK release"
+```
+
+This updates:
+
+- `public/download/astra-matrix-latest.apk`
+- `public/download/latest.json`
+
+The landing page reads `latest.json` to show version/build date/size/SHA256.
+
 ## 3) Publish on your server
 
 Upload the APK to your web root so it is publicly available at:
