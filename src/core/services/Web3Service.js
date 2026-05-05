@@ -1,5 +1,13 @@
 const state = require('../State');
 
+function getRuntimeRequire() {
+  try {
+    return eval('require');
+  } catch (error) {
+    return null;
+  }
+}
+
 class Web3Service {
   constructor() {
     this.provider = null;
@@ -10,7 +18,9 @@ class Web3Service {
   loadEthers() {
     if (this.ethers) return this.ethers;
     try {
-      this.ethers = require('ethers');
+      const runtimeRequire = getRuntimeRequire();
+      if (!runtimeRequire) return null;
+      this.ethers = runtimeRequire('ethers');
       return this.ethers;
     } catch (error) {
       console.warn('Web3Service: ethers unavailable in this runtime');

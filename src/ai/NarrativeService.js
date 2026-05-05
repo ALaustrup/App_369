@@ -1,5 +1,14 @@
 const state = require('../core/State');
 
+function getRuntimeRequire() {
+  try {
+    // Prevent Metro from statically resolving Node-oriented SDK packages.
+    return eval('require');
+  } catch (error) {
+    return null;
+  }
+}
+
 class NarrativeService {
   constructor() {
     this.model = null;
@@ -25,7 +34,9 @@ class NarrativeService {
     }
 
     try {
-      const { GoogleGenerativeAI } = require('@google/generative-ai');
+      const runtimeRequire = getRuntimeRequire();
+      if (!runtimeRequire) return;
+      const { GoogleGenerativeAI } = runtimeRequire('@google/generative-ai');
       const genAI = new GoogleGenerativeAI(apiKey);
       this.model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
       this.isAiEnabled = true;
