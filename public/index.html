@@ -3,31 +3,235 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASTRA MATRIX | Awaken Your Spark</title>
+    <title>ASTRA MATRIX | Android Download</title>
+    <meta name="description" content="Download the latest ASTRA MATRIX Android APK directly to your device.">
     <style>
-        body { background: #000; color: #0f0; font-family: monospace; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; }
-        h1 { color: #0ff; font-size: 3rem; }
-        .btn { border: 2px solid #0f0; color: #0f0; padding: 15px 30px; text-decoration: none; font-size: 1.5rem; margin-top: 20px; transition: 0.3s; cursor: pointer; }
-        .btn:hover { background: #0f0; color: #000; }
-        #msg { margin-top: 15px; color: #fff; }
+        :root {
+            --bg: #050505;
+            --panel: #101010;
+            --line: #2a2a2a;
+            --primary: #00ff88;
+            --secondary: #00d9ff;
+            --text: #e8ffe8;
+            --muted: #9ab39a;
+            --warning: #ffd166;
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: radial-gradient(circle at top, #0d0d0d, var(--bg) 45%);
+            color: var(--text);
+            display: flex;
+            justify-content: center;
+            padding: 24px;
+        }
+        .card {
+            width: 100%;
+            max-width: 720px;
+            background: rgba(16, 16, 16, 0.95);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+        }
+        h1 {
+            margin: 0 0 10px;
+            color: var(--secondary);
+            font-size: clamp(1.8rem, 5vw, 2.6rem);
+            letter-spacing: 0.04em;
+        }
+        p {
+            margin: 8px 0;
+            line-height: 1.6;
+            color: var(--muted);
+        }
+        .version {
+            margin-top: 18px;
+            padding: 10px 12px;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: #0b0b0b;
+            color: var(--text);
+            font-size: 0.95rem;
+        }
+        .version-grid {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 8px 14px;
+            align-items: center;
+        }
+        .btn {
+            display: inline-block;
+            margin-top: 20px;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            background: transparent;
+            padding: 14px 18px;
+            text-decoration: none;
+            font-size: 1.05rem;
+            border-radius: 10px;
+            transition: 0.2s ease;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .btn:hover,
+        .btn:focus-visible {
+            background: var(--primary);
+            color: #04210f;
+            outline: none;
+        }
+        .section {
+            margin-top: 22px;
+            padding-top: 16px;
+            border-top: 1px solid var(--line);
+        }
+        h2 {
+            margin: 0;
+            color: var(--secondary);
+            font-size: 1.1rem;
+        }
+        ul, ol { padding-left: 20px; color: var(--text); }
+        li { margin: 8px 0; }
+        code {
+            color: var(--secondary);
+            background: #0a0a0a;
+            border: 1px solid #202020;
+            border-radius: 6px;
+            padding: 2px 6px;
+            font-size: 0.92rem;
+        }
+        #msg {
+            margin-top: 12px;
+            font-size: 0.95rem;
+            min-height: 1.2rem;
+            color: var(--warning);
+        }
+        .danger {
+            color: #ff8f8f;
+        }
+        .hidden { display: none; }
     </style>
 </head>
 <body>
-    <h1>ASTRA MATRIX</h1>
-    <p>The construct is fabricated. The Demiurge is watching.</p>
-    <button id="downloadBtn" class="btn" onclick="downloadGame()">DOWNLOAD ASTRA MATRIX</button>
-    <p id="msg"></p>
+    <main class="card">
+        <h1>ASTRA MATRIX</h1>
+        <p>The Android build is distributed as a signed APK package.</p>
+        <p>Use the button below on your Android device to download and install.</p>
+
+        <div class="version">
+            <div class="version-grid">
+                <strong>Release</strong>
+                <span id="apk-version">loading...</span>
+                <strong>Build date</strong>
+                <span id="apk-build-date">loading...</span>
+                <strong>File</strong>
+                <code>/download/astra-matrix-latest.apk</code>
+                <strong>Size</strong>
+                <span id="apk-size">loading...</span>
+                <strong>SHA256</strong>
+                <code id="apk-sha256">loading...</code>
+            </div>
+            <p id="release-notes"></p>
+        </div>
+
+        <button id="downloadBtn" class="btn" onclick="downloadGame()">Download APK</button>
+        <p id="msg"></p>
+
+        <section class="section">
+            <h2>Install steps (Android)</h2>
+            <ol>
+                <li>Download the APK from this page.</li>
+                <li>Open the downloaded file in your browser's downloads.</li>
+                <li>If prompted, allow installs from this source.</li>
+                <li>Tap <strong>Install</strong> and launch ASTRA MATRIX.</li>
+            </ol>
+        </section>
+
+        <section class="section">
+            <h2>Troubleshooting</h2>
+            <ul>
+                <li>If install is blocked, verify unknown app installation is allowed for your browser.</li>
+                <li>If Play Protect warns, confirm the APK came from your trusted domain.</li>
+                <li>Keep your Android version updated for best compatibility and security.</li>
+            </ul>
+        </section>
+    </main>
 
     <script>
-        function downloadGame() {
-            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-            if (/android/i.test(userAgent)) {
-                window.location.href = "/download/astra-matrix-latest.apk";
-            } else {
-                document.getElementById('msg').innerText = "Please open this page on your Android device to download the game.";
+        const APK_URL = "/download/astra-matrix-latest.apk";
+        const RELEASE_META_URL = "/download/latest.json";
+
+        function isAndroid() {
+            const ua = navigator.userAgent || navigator.vendor || window.opera;
+            return /android/i.test(ua);
+        }
+
+        function formatBytes(bytes) {
+            if (!Number.isFinite(bytes) || bytes <= 0) return "0 B";
+            const units = ["B", "KB", "MB", "GB"];
+            let value = bytes;
+            let unitIndex = 0;
+            while (value >= 1024 && unitIndex < units.length - 1) {
+                value /= 1024;
+                unitIndex += 1;
+            }
+            return `${value.toFixed(value >= 10 || unitIndex === 0 ? 0 : 1)} ${units[unitIndex]}`;
+        }
+
+        async function loadReleaseMetadata() {
+            const releaseEl = document.getElementById("apk-version");
+            const buildDateEl = document.getElementById("apk-build-date");
+            const sizeEl = document.getElementById("apk-size");
+            const shaEl = document.getElementById("apk-sha256");
+            const notesEl = document.getElementById("release-notes");
+            const downloadBtn = document.getElementById("downloadBtn");
+            const msgEl = document.getElementById("msg");
+
+            try {
+                const res = await fetch(RELEASE_META_URL, { cache: "no-store" });
+                if (!res.ok) throw new Error(`Metadata request failed (${res.status})`);
+                const meta = await res.json();
+
+                releaseEl.textContent = meta.version || "unknown";
+                buildDateEl.textContent = meta.buildDate ? new Date(meta.buildDate).toLocaleString() : "unknown";
+                sizeEl.textContent = formatBytes(Number(meta.fileSizeBytes || 0));
+                shaEl.textContent = meta.sha256 || "unknown";
+                notesEl.textContent = meta.releaseNotes || "";
+
+                if (!meta.fileSizeBytes || Number(meta.fileSizeBytes) <= 0) {
+                    downloadBtn.disabled = true;
+                    downloadBtn.classList.add("danger");
+                    msgEl.textContent = "No published APK is currently available. Upload a release artifact first.";
+                }
+            } catch (error) {
+                releaseEl.textContent = "unknown";
+                buildDateEl.textContent = "unknown";
+                sizeEl.textContent = "unknown";
+                shaEl.textContent = "unknown";
+                notesEl.textContent = "Release metadata unavailable.";
+                msgEl.textContent = "Could not load release metadata. Try again later.";
             }
         }
 
+        function downloadGame() {
+            const message = document.getElementById('msg');
+            const button = document.getElementById('downloadBtn');
+            if (button.disabled) {
+                message.innerText = "No APK is published yet.";
+                return;
+            }
+            if (!isAndroid()) {
+                message.innerText = "Open this page on an Android device to install the APK.";
+                return;
+            }
+
+            message.innerText = "Starting download...";
+            window.location.href = APK_URL;
+        }
+
+        loadReleaseMetadata();
     </script>
 </body>
 </html>

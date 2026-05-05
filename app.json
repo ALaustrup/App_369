@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "App_369",
+    "owner": "psybrninja",
     "slug": "app-369",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -26,6 +27,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "440a38e6-afe8-42f9-82a5-f9f987e5c44d"
+      }
     }
   }
 }

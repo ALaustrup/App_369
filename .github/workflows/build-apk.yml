@@ -2,6 +2,8 @@ name: Build Android APK
 on:
   push:
     branches: [ main ]
+  pull_request:
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
@@ -16,7 +18,7 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
-          cache-dependency-path: App_369/package-lock.json
+          cache-dependency-path: package-lock.json
 
       - name: 🏗 Setup Expo
         uses: expo/expo-github-action@v8
@@ -26,9 +28,9 @@ jobs:
           token: ${{ secrets.EXPO_TOKEN }}
 
       - name: 📦 Install dependencies
-        working-directory: ./App_369
-        run: npm install
+        run: npm ci
 
       - name: 🚀 Build APK
-        working-directory: ./App_369
-        run: eas build --platform android --profile preview --non-interactive
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        run: npm run build:apk
