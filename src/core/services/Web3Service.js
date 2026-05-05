@@ -1,17 +1,30 @@
-const { ethers } = require('ethers');
 const state = require('../State');
 
 class Web3Service {
   constructor() {
     this.provider = null;
     this.signer = null;
+    this.ethers = null;
+  }
+
+  loadEthers() {
+    if (this.ethers) return this.ethers;
+    try {
+      this.ethers = require('ethers');
+      return this.ethers;
+    } catch (error) {
+      console.warn('Web3Service: ethers unavailable in this runtime');
+      return null;
+    }
   }
 
   async connectWallet(privateKey = null) {
     try {
       if (privateKey) {
+        const ethersLib = this.loadEthers();
+        if (!ethersLib) return null;
         // CLI / Manual private key connection
-        const wallet = new ethers.Wallet(privateKey);
+        const wallet = new ethersLib.Wallet(privateKey);
         state.player.walletAddress = wallet.address;
         this.signer = wallet;
         return wallet.address;

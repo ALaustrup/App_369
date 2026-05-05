@@ -1,5 +1,14 @@
 const state = require('../State');
 
+function getRuntimeRequire() {
+  try {
+    // Using eval avoids static module resolution in Metro during mobile bundling.
+    return eval('require');
+  } catch (error) {
+    return null;
+  }
+}
+
 class GitHubService {
   constructor() {
     this.octokit = null;
@@ -11,10 +20,12 @@ class GitHubService {
   }
 
   loadOctokit() {
+    if (!this.isNodeRuntime) return null;
     if (this.Octokit) return this.Octokit;
     try {
-      // Lazy import prevents React Native startup from pulling unsupported modules.
-      this.Octokit = require('octokit').Octokit;
+      const runtimeRequire = getRuntimeRequire();
+      if (!runtimeRequire) return null;
+      this.Octokit = runtimeRequire('octokit').Octokit;
       return this.Octokit;
     } catch (error) {
       console.warn('GitHubService: Octokit unavailable in this runtime');
@@ -26,7 +37,9 @@ class GitHubService {
     if (!this.isNodeRuntime) return null;
     if (this.git) return this.git;
     try {
-      this.git = require('simple-git')();
+      const runtimeRequire = getRuntimeRequire();
+      if (!runtimeRequire) return null;
+      this.git = runtimeRequire('simple-git')();
       return this.git;
     } catch (error) {
       console.warn('GitHubService: simple-git unavailable in this runtime');

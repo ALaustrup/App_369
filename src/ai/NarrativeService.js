@@ -8,7 +8,16 @@ class NarrativeService {
     this.initializeModel();
   }
 
+  isNativeRuntime() {
+    return typeof navigator !== 'undefined' && navigator.product === 'ReactNative';
+  }
+
   initializeModel() {
+    if (this.isNativeRuntime()) {
+      console.warn('NarrativeService: Native runtime detected; AI SDK disabled for build safety');
+      return;
+    }
+
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey || apiKey === 'DUMMY_KEY') {
       console.warn('NarrativeService: GEMINI_API_KEY not set; enabling offline narrative mode');
