@@ -56,6 +56,12 @@
             color: var(--text);
             font-size: 0.95rem;
         }
+        .version-grid {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 8px 14px;
+            align-items: center;
+        }
         .btn {
             display: inline-block;
             margin-top: 20px;
@@ -102,6 +108,9 @@
             min-height: 1.2rem;
             color: var(--warning);
         }
+        .danger {
+            color: #ff8f8f;
+        }
         .hidden { display: none; }
     </style>
 </head>
@@ -112,8 +121,19 @@
         <p>Use the button below on your Android device to download and install.</p>
 
         <div class="version">
-            <strong>Release:</strong> <span id="apk-version">latest</span><br>
-            <strong>File:</strong> <code>/download/astra-matrix-latest.apk</code>
+            <div class="version-grid">
+                <strong>Release</strong>
+                <span id="apk-version">loading...</span>
+                <strong>Build date</strong>
+                <span id="apk-build-date">loading...</span>
+                <strong>File</strong>
+                <code>/download/astra-matrix-latest.apk</code>
+                <strong>Size</strong>
+                <span id="apk-size">loading...</span>
+                <strong>SHA256</strong>
+                <code id="apk-sha256">loading...</code>
+            </div>
+            <p id="release-notes"></p>
         </div>
 
         <button id="downloadBtn" class="btn" onclick="downloadGame()">Download APK</button>
@@ -140,21 +160,78 @@
     </main>
 
     <script>
+        const APK_URL = "/download/astra-matrix-latest.apk";
+        const RELEASE_META_URL = "/download/latest.json";
+
         function isAndroid() {
             const ua = navigator.userAgent || navigator.vendor || window.opera;
             return /android/i.test(ua);
         }
 
+        function formatBytes(bytes) {
+            if (!Number.isFinite(bytes) || bytes <= 0) return "0 B";
+            const units = ["B", "KB", "MB", "GB"];
+            let value = bytes;
+            let unitIndex = 0;
+            while (value >= 1024 && unitIndex < units.length - 1) {
+                value /= 1024;
+                unitIndex += 1;
+            }
+            return `${value.toFixed(value >= 10 || unitIndex === 0 ? 0 : 1)} ${units[unitIndex]}`;
+        }
+
+        async function loadReleaseMetadata() {
+            const releaseEl = document.getElementById("apk-version");
+            const buildDateEl = document.getElementById("apk-build-date");
+            const sizeEl = document.getElementById("apk-size");
+            const shaEl = document.getElementById("apk-sha256");
+            const notesEl = document.getElementById("release-notes");
+            const downloadBtn = document.getElementById("downloadBtn");
+            const msgEl = document.getElementById("msg");
+
+            try {
+                const res = await fetch(RELEASE_META_URL, { cache: "no-store" });
+                if (!res.ok) throw new Error(`Metadata request failed (${res.status})`);
+                const meta = await res.json();
+
+                releaseEl.textContent = meta.version || "unknown";
+                buildDateEl.textContent = meta.buildDate ? new Date(meta.buildDate).toLocaleString() : "unknown";
+                sizeEl.textContent = formatBytes(Number(meta.fileSizeBytes || 0));
+                shaEl.textContent = meta.sha256 || "unknown";
+                notesEl.textContent = meta.releaseNotes || "";
+
+                if (!meta.fileSizeBytes || Number(meta.fileSizeBytes) <= 0) {
+                    downloadBtn.disabled = true;
+                    downloadBtn.classList.add("danger");
+                    msgEl.textContent = "No published APK is currently available. Upload a release artifact first.";
+                }
+            } catch (error) {
+                releaseEl.textContent = "unknown";
+                buildDateEl.textContent = "unknown";
+                sizeEl.textContent = "unknown";
+                shaEl.textContent = "unknown";
+                notesEl.textContent = "Release metadata unavailable.";
+                msgEl.textContent = "Could not load release metadata. Try again later.";
+            }
+        }
+
         function downloadGame() {
             const message = document.getElementById('msg');
+            const button = document.getElementById('downloadBtn');
+            if (button.disabled) {
+                message.innerText = "No APK is published yet.";
+                return;
+            }
             if (!isAndroid()) {
                 message.innerText = "Open this page on an Android device to install the APK.";
                 return;
             }
 
             message.innerText = "Starting download...";
-            window.location.href = "/download/astra-matrix-latest.apk";
+            window.location.href = APK_URL;
         }
+
+        loadReleaseMetadata();
     </script>
 </body>
 </html>

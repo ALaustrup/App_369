@@ -1,0 +1,9 @@
+{
+  "version": "0.0.0-placeholder",
+  "buildDate": "1970-01-01T00:00:00.000Z",
+  "fileName": "astra-matrix-latest.apk",
+  "fileSizeBytes": 0,
+  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "minAndroidSdk": 24,
+  "releaseNotes": "Placeholder artifact. Upload a real APK to publish a release."
+}
