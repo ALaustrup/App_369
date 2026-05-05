@@ -44,7 +44,10 @@ class SceneEngine {
   async handleChoice(choice) {
     this.dynamicScene = null; 
     if (choice.action === 'perform_restore') await corruption.performRestore();
-    if (choice.action === 'sync_github') await github.authenticate('dummy-token');
+    if (choice.action === 'sync_github') {
+      const githubToken = process.env.GITHUB_TOKEN || null;
+      await github.authenticate(githubToken);
+    }
     if (choice.action === 'apply_expansion') await github.applyExpansion();
 
     if (choice.nextScene) {

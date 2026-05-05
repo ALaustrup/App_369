@@ -1,16 +1,48 @@
-const { Octokit } = require('octokit');
-const simpleGit = require('simple-git');
 const state = require('../State');
 
 class GitHubService {
   constructor() {
     this.octokit = null;
-    this.git = simpleGit();
+    this.git = null;
+    this.Octokit = null;
+    this.isNodeRuntime = typeof process !== 'undefined' && !!(process.versions && process.versions.node);
     this.repoOwner = "ALaustrup";
     this.repoName = "App_369";
   }
 
+  loadOctokit() {
+    if (this.Octokit) return this.Octokit;
+    try {
+      // Lazy import prevents React Native startup from pulling unsupported modules.
+      this.Octokit = require('octokit').Octokit;
+      return this.Octokit;
+    } catch (error) {
+      console.warn('GitHubService: Octokit unavailable in this runtime');
+      return null;
+    }
+  }
+
+  loadGitClient() {
+    if (!this.isNodeRuntime) return null;
+    if (this.git) return this.git;
+    try {
+      this.git = require('simple-git')();
+      return this.git;
+    } catch (error) {
+      console.warn('GitHubService: simple-git unavailable in this runtime');
+      return null;
+    }
+  }
+
   async authenticate(token) {
+    if (!token || token === 'dummy-token') {
+      console.warn('GitHubService: Valid token not provided; running in offline mode');
+      return false;
+    }
+
+    const Octokit = this.loadOctokit();
+    if (!Octokit) return false;
+
     try {
       this.octokit = new Octokit({ auth: token });
       const { data: user } = await this.octokit.rest.users.getAuthenticated();
@@ -37,10 +69,16 @@ class GitHubService {
   }
 
   async commitProgress(message) {
+    const git = this.loadGitClient();
+    if (!git) {
+      console.warn('GitHubService: commitProgress not supported in this environment');
+      return false;
+    }
+
     try {
-      await this.git.add('.');
-      await this.git.commit(message);
-      await this.git.push('origin', 'main');
+      await git.add('.');
+      await git.commit(message);
+      await git.push('origin', 'main');
       console.log(`GitHubService: Progress committed - "${message}"`);
       return true;
     } catch (error) {
